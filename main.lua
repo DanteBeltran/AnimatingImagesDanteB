@@ -12,12 +12,14 @@ local mario
 local pikachu
 local kirby
 local backgroundImage
+local HW = display.contentWidth/2
 
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
 -- set the scroll speed
 scrollSpeed = 3
+scrollSpeed2 = 0
 kirbyScrollSpeed = 3
 
 -- backround image with widht and height
@@ -35,8 +37,8 @@ pacman.alpha = 0
 -- set the initial x and y position of the beetleship
 pacman.x = 0
 pacman.y = 0
-mario.x = 500
-mario.y = 800
+mario.x = 0
+mario.y = 0
 pikachu.x = 1000
 pikachu.y = display.contentHeight/8
 kirby.x = 0
@@ -101,6 +103,24 @@ end
 
 --MoveKirby will be called over and over again
 Runtime:addEventListener("enterFrame", MoveKirby)
+
+--Function 
+local function MoveMario(event)
+	mario.x = mario.x + scrollSpeed
+	mario.y = mario.y + scrollSpeed2
+	print ("mario.x ="..mario.x)
+	if (mario.x >= 0) then
+		scrollSpeed = 4
+		scrollSpeed2 = -3
+	end
+	if (mario.x <=HW) then
+		scrollSpeed = 4
+		scrollSpeed2 = 3
+	end
+end
+
+Runtime:addEventListener("enterFrame", MoveMario)
+
 	
 
 
