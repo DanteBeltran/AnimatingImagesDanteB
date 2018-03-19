@@ -12,7 +12,8 @@ local mario
 local pikachu
 local kirby
 local backgroundImage
-local HW = display.contentWidth/2
+local midpoint = display.contentWidth/2
+local textObject
 
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -30,6 +31,16 @@ local pacman = display.newImageRect("Images/Pacman.png", 200, 200)
 local mario = display.newImageRect("Images/Mario.png", 200, 200)
 local pikachu = display.newImageRect("Images/Pikachu.png", 200, 200)
 local kirby = display.newImageRect("Images/Kirby.png", 300, 200)
+
+-- create text object, set its position
+local textObject = display.newText ("Animating Images!", 500, 700, nil, 50)
+textObject:setTextColor (0, 1, 0)
+
+-- load sounds
+local backgroundMusic = audio.loadSound("Sounds/Background Music.mp3")
+
+--play sounds
+audio.play(backgroundMusic)
 
 -- set the image to be transparent
 pacman.alpha = 0
@@ -70,7 +81,7 @@ Runtime:addEventListener("enterFrame", MovePikachu)
 local function MovePacman(event)
 	-- add the scroll speed to the x-value of Pacman
 	pacman.x = pacman.x + scrollSpeed 
-	pacman.y = pacman.y + scrollSpeed 
+	pacman.y = pacman.y + scrollSpeed
 	-- change the transparency of Pacman every time it moves so that it fades out
 	pacman.alpha = pacman.alpha + 0.01
 end
@@ -86,12 +97,13 @@ Runtime:addEventListener("enterFrame", MovePacman)
 local function MoveKirby(event)
 	-- add the scroll speed to the x-value of Kirby
 	kirby.x = kirby.x + kirbyScrollSpeed
-	--
+	kirby:rotate (1)
+	-- when kirby reaches a x value greater than 1000 the scroll speed and scale changes
 	if (kirby.x > 1000) then
 		kirby.xScale = -1
 		kirbyScrollSpeed = -3
 	end
-	--
+	-- when kirby reaches a x value less than 0 the scroll speed and scale changes
 	if (kirby.x < 0) then
 		kirby.xScale = 1
 		kirbyScrollSpeed = 3
@@ -104,16 +116,22 @@ end
 --MoveKirby will be called over and over again
 Runtime:addEventListener("enterFrame", MoveKirby)
 
---Function 
+-- Function: MoveMario
+-- Input: this function accepts an event listener
+-- Output: none
+-- Description: This function makes mario move on a parabolic path
 local function MoveMario(event)
+	-- add 2 scroll speeds to the x value and y value of mario
 	mario.x = mario.x + scrollSpeed
 	mario.y = mario.y + scrollSpeed2
 	print ("mario.x ="..mario.x)
+-- sets the scroll speed of which the object moves at
 	if (mario.x >= 0) then
 		scrollSpeed = 4
 		scrollSpeed2 = -3
 	end
-	if (mario.x <=HW) then
+	--  when the object reaches the midpoint of the screen  the scroll speed will change. 
+	if (mario.x <= midpoint) then
 		scrollSpeed = 4
 		scrollSpeed2 = 3
 	end
