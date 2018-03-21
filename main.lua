@@ -61,14 +61,14 @@ pikachu:scale(1, 1 )
 -- Function: MovePikachu
 -- Input: this function accepts an event listener
 -- Output: none
--- Description: This function adds the scroll speed to the x-value of Pacman and it changes the scale of Pacman
+-- Description: This function adds the scroll speed to the x-value of Pacman 
+-- and it changes the scale of Pacman
 local function MovePikachu(event)
 	-- add the scroll speed to the x-value of Pacman
 	pikachu.x = pikachu.x - scrollSpeed
 	-- makes the object grow as it is moving
 	pikachu.xScale = pikachu.xScale + 0.005
 	pikachu.yScale = pikachu.yScale + 0.005
-	
 end
 
 -- MovePacman will be called over and over again
@@ -136,7 +136,7 @@ local function MoveMario(event)
 		scrollSpeed2 = 3
 	end
 end
-
+-- MoveMario will be called over and over again
 Runtime:addEventListener("enterFrame", MoveMario)
 
 	
